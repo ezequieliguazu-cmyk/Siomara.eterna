@@ -23,7 +23,6 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* Destello sutil de fondo */
             background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0f0 100%);
         }
 
@@ -31,17 +30,224 @@
 
         .timer-container {
             position: absolute;
-            top: 40px;
+            top: 30px;
             background: linear-gradient(135deg, #b927f8, #9d00ff);
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0 4px 15px rgba(157, 0, 255, 0.3);
             z-index: 20;
             text-align: center;
             border: 2px solid white;
         }
-        .timer-title { font-size: 0.65rem; color: rgba(255,255,255,0.9); text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-        #timer { font-weight: bold; font-size: 0.95rem; color: #fff; margin-top: 2px; }
+        .timer-title { font-size: 0.6rem; color: #fff; text-transform: uppercase; font-weight: bold; opacity: 0.9; }
+        #timer { font-weight: bold; font-size: 0.85rem; color: #fff; margin-top: 2px; }
 
         .container {
             position: relative;
+            z-index: 10;
+            width: 320px;
+            height: 250px;
+            margin-top: 40px;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: var(--vibrant-violet);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .envelope-text {
+            font-family: 'Dancing Script', cursive;
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 15px;
+            z-index: 12;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--vibrant-violet);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            z-index: 11;
+            transition: transform 0.6s ease;
+            transform-origin: top;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .letter {
+            position: absolute;
+            top: 5%; left: 5%;
+            width: 90%; height: 90%;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            color: #333;
+            z-index: 5;
+            opacity: 0;
+            transition: all 0.8s ease;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .container.open .flap { transform: rotateX(180deg); z-index: 2; }
+        .container.open .envelope { transform: translateY(140px); }
+        .container.open .letter {
+            opacity: 1;
+            transform: translateY(-260px);
+            z-index: 25;
+            height: 500px;
+        }
+
+        .intro-love {
+            font-family: 'Dancing Script', cursive;
+            color: var(--neon-pink);
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .date-box {
+            background: var(--vibrant-violet); color: white;
+            display: inline-block; padding: 4px 12px;
+            border-radius: 20px; font-weight: bold; margin-bottom: 15px; font-size: 0.75rem;
+        }
+        
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--vibrant-violet); margin-bottom: 10px; }
+        .main-text { font-size: 0.9rem; line-height: 1.5; text-align: left; color: #444; }
+        .quote { font-family: 'Playfair Display', serif; font-style: italic; color: var(--neon-pink); border-left: 3px solid var(--vibrant-violet); padding-left: 10px; margin: 15px 0; font-size: 0.85rem; }
+        .atomic-love { color: #ff4500; font-weight: bold; text-align: center; display: block; margin: 15px 0; font-size: 1.1rem; }
+
+        .action-button {
+            margin-top: 20px;
+            background: linear-gradient(to right, #d638ef, #9d00ff);
+            color: white; border: none; padding: 12px 40px;
+            border-radius: 30px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(157, 0, 255, 0.3);
+            z-index: 15;
+        }
+
+        .music-btn {
+            position: fixed; bottom: 30px; right: 20px;
+            background: var(--vibrant-violet); color: white; border: none;
+            width: 55px; height: 55px; border-radius: 50%;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.4rem;
+            z-index: 100;
+        }
+
+        .particle { position: absolute; pointer-events: none; animation: float linear infinite; }
+        @keyframes float { 
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="timer-container">
+        <div class="timer-title">Tiempo amándonos</div>
+        <div id="timer">00d 00h 00m 00s</div>
+    </div>
+
+    <div id="particles"></div>
+
+    <div class="container" id="mainContainer" onclick="toggleLetter()">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="envelope-text">
+                Para el Amor de mi Vida:<br>
+                <span style="font-size: 1.5rem;">Mi Siomara Eterna ⚛️</span>
+            </div>
+        </div>
+        <div class="letter">
+            <span class="intro-love">Para el amor de mi vida...</span>
+            <div class="date-box">19/12/2022 ∞</div>
+            <h1>Mi Querida Siomara,</h1>
+            <div class="main-text">
+                <p>Hoy agradezco al universo que nuestros caminos se cruzaran aquel 19 de diciembre. Me encantas de una forma que no tiene explicación.</p>
+                <div class="quote">"Si tu amor fuera música, la escucharía toda la vida, nota por nota."</div>
+                <p>Vos sabés esa parte del Principito donde el zorro explica que cuando uno crea lazos, el otro se vuelve único en el mundo. Yo entendí eso con vos.</p>
+                <p>No es que no existan más personas, es que el tiempo que compartimos, lo que construimos y lo que siento hacen que para mí no haya nadie igual.</p>
+                <div class="quote">"Hay muchas rosas, sí… pero mi rosa sos vos."</div>
+                <p>Porque fue a la que elegí cuidar, a la que le di mi tiempo, mi paciencia y mi amor. Y cuando uno ‘domestica’, deja de haber millones y empieza a haber una sola.</p>
+                <div class="quote">"Solo se ve bien con el corazón; lo esencial es invisible a los ojos."</div>
+                <p>Eres mi refugio, mi paz y mi orgullo. Gracias por ser esa fuerza atómica que mueve todo mi mundo.</p>
+                <span class="atomic-love">¡Te amo atómicamente, mi tomate! 🍅⚛️</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="action-button" onclick="atomicBeso(event)">¡BESO ATÓMICO! 💋</button>
+    <button class="music-btn" id="mBtn" onclick="toggleMusic(event)">🎵</button>
+    
+    <div id="player"></div>
+
+    <script>
+        // YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'WcEwxk6hZnI',
+                events: { 'onReady': function() { console.log("Music Ready"); } }
+            });
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation();
+            const btn = document.getElementById('mBtn');
+            if (player && player.getPlayerState() === 1) {
+                player.pauseVideo();
+                btn.innerHTML = "🎵";
+            } else if (player) {
+                player.playVideo();
+                btn.innerHTML = "⏸️";
+            }
+        }
+
+        function toggleLetter() { document.getElementById('mainContainer').classList.toggle('open'); }
+        function atomicBeso(e) { e.stopPropagation(); alert('¡BOOOOM! 💥 ¡Te amo con toda mi alma, Siomara! 💋'); }
+
+        function updateTimer() {
+            const start = new Date('2022-12-19T00:00:00');
+            const now = new Date();
+            const diff = now - start;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('timer').innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
+        }
+        setInterval(updateTimer, 1000);
+
+        function createParticle() {
+            const symbols = ['❤️', '✨', '💖', '⭐', '❤️']; 
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.getElementById('particles').appendChild(p);
+            setTimeout(() => p.remove(), 7000);
+        }
+        setInterval(createParticle, 300);
+    </script>
+</body>
+</html>
