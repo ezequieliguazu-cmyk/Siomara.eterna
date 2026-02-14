@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Siomara Eterna ⚛️</title>
+    <style>
+        :root {
+            --vibrant-violet: #9d00ff;
+            --neon-pink: #ff00ff;
+            --deep-purple: #2e004e;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle, var(--deep-purple), #000);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Fondo de estrellas/átomos */
+        #particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        /* Sobre Animado */
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: var(--vibrant-violet);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        .envelope:hover { transform: translateY(-10px); }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--vibrant-violet);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            z-index: 3;
+            transition: transform 0.6s ease-in-out;
+            transform-origin: top;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .envelope.open .flap { transform: rotateX(180deg); }
+
+        /* La Carta */
+        .letter {
+            position: absolute;
+            bottom: 10px; left: 5%;
+            width: 90%;
+            height: 550px; /* Carta larga */
+            background: var(--glass);
+            border-radius: 10px;
+            padding: 30px;
+            color: #333;
+            transition: transform 0.8s ease-in-out;
+            z-index: 2;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-350px);
+            z-index: 4;
+        }
+
+        /* Detalles Estéticos */
+        .date-box {
+            background: var(--vibrant-violet);
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(157, 0, 255, 0.4);
+        }
+
+        h1 { color: var(--vibrant-violet); font-size: 1.6rem; margin-bottom: 15px; }
+        
+        .main-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--neon-pink);
+            border-left: 3px solid var(--vibrant-violet);
+            padding-left: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .atomic-love {
+            font-size: 1.2rem;
+            color: #ff4500; /* Color tomate vibrante */
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--vibrant-violet), var(--neon-pink));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Animaciones de corazones */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: move linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            color: var(--neon-pink);
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+
+    <div id="particles"></div>
+
+    <div class="container">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+            <div class="flap"></div>
+            <div class="letter">
+                <div class="date-box">19/12/2022 ∞</div>
+                
+                <h1>Mi Querida Siomara,</h1>
+                
+                <div class="main-text">
+                    <p>Hoy no es un día cualquiera, es una oportunidad más para agradecerle al universo que nuestros caminos se cruzaran aquel 19 de diciembre.</p>
+                    
+                    <div class="quote">"Si tu amor fuera música, la escucharía toda la vida, en bucle, sin cansarme jamás de cada nota de tu voz."</div>
+                    
+                    <p>Eres la persona que le da sentido a mis días. A tu lado he aprendido que el amor no solo se siente, se construye, se cuida y se vive con la intensidad de mil soles.</p>
+                    
+                    <p>Me encanta cómo iluminas todo a tu alrededor, la ternura de tu mirada y la forma en que haces que todo parezca posible. Eres mi refugio, mi paz y mi mayor motivación.</p>
+                    
+                    <span class="atomic-love">¡Te amo atómicamente, mi tomate! 🍅⚛️</span>
+                    
+                    <button class="button" onclick="atomicBeso(event)">¡HAZ CLIC PARA UN BESO ATÓMICO!</button>
+                    
+                    <p style="margin-top: 20px; font-size: 0.8rem; text-align: center;">Siempre tuyo, desde el núcleo hasta el infinito.</p>
+                </div>
+            </div>
+            <div class="click-hint">TOCA EL SOBRE PARA ABRIR 💜</div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            document.getElementById('envelope').classList.toggle('open');
+        }
+
+        function createParticle() {
+            const particles = ['💜', '⚛️', '🍅', '✨', '💖', '⭐'];
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.innerHTML = particles[Math.floor(Math.random() * particles.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            p.style.opacity = Math.random();
+            document.getElementById('particles').appendChild(p);
+
+            setTimeout(() => { p.remove(); }, 5000);
+        }
+
+        setInterval(createParticle, 150);
+
+        function atomicBeso(e) {
+            e.stopPropagation(); // Evita cerrar el sobre
+            alert('¡BOOOOM! 💥 Has recibido un beso con la fuerza de un núcleo atómico. ¡Te amo, Siomara! 💋');
+            for(let i=0; i<30; i++) {
+                setTimeout(createParticle, i * 30);
+            }
+        }
+    </script>
+</body>
+  </html>
